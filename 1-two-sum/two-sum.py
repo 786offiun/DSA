@@ -1,18 +1,32 @@
 class Solution(object):
     def twoSum(self, nums, target):
-        arr = [(v, i) for i, v in enumerate(nums)]
-        arr.sort()  # sorts by value
+        ori = nums[:]
 
-        left = 0
-        right = len(arr) - 1
 
-        while left < right:
-            s = arr[left][0] + arr[right][0]
+        left  = 0
+        right = len(nums) - 1
+        result = []
+        nums.sort()
 
+        for i in range(len(nums)) :
+        
+            s = nums[left] + nums[right]
+            print(s,left , right , i)
             if s == target:
-                return [arr[left][1], arr[right][1]]
 
-            if s < target:
-                left += 1
-            else:
+                result.append(nums[left])
+                result.append(nums[right])
+                break
+            elif s > target:
                 right -= 1
+            else:
+                left += 1
+
+        # find ORIGINAL indices (correct even for duplicates)
+        first_val = result[0]
+        second_val = result[1]
+        
+        f = ori.index(first_val)
+        ori[f] = None   # so second index is not same
+        s = ori.index(second_val)
+        return [f,s]
